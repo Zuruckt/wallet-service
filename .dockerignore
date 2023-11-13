@@ -1,0 +1,6 @@
+**
+!app/
+!bin/
+!config/
+!composer.*
+!.docker/scripts/entrypoint-ini.sh

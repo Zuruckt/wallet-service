@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  php:
+    image: php
+    hostname: php
+    container_name: php
+    build:
+      context: ./
+      dockerfile: ./.docker/php/Dockerfile
+      args:
+        USER: "${USER}"
+        UID: "${UID}"
+        GID: "${GID}"
+    env_file:
+      - .env
+    ports:
+      - "9501:9501"
+    volumes:
+      - ./:/var/www
+      - ./.docker/php/ini/php.ini:/etc/php82/php.ini
+      - ./.docker/php/ini/swoole.ini:/etc/php82/conf.d/50_swoole.ini
+      - ./.docker/php/ini/opcache.ini:/etc/php82/conf.d/00_opcache.ini
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
+    external: false
+    name: app
